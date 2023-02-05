@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+
+TMPDIR="/tmp/open-logs"
+
+if [[ ! -d $TMPDIR ]]; then
+    mkdir $TMPDIR
+fi
+
+LOGFILE="open-"$(echo $RANDOM | md5sum | head -c 5)
+
+while [[ -f $TMPDIR/$LOGFILE ]]; do
+    LOGFILE="open-"$(echo $RANDOM | md5sum | head -c 5)
+done
+
+nohup xdg-open $1 > $TMPDIR/$LOGFILE 2>&1 &
